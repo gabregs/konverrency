@@ -1,6 +1,7 @@
 import React from 'react';
 import currencies from '../utils/currencies';
 import ShowRates from './ShowRates';
+import CurrencyConverter from './CurrencyConverter';
 import { checkStatus, json } from '../utils/fetchHelper';
 
 class Home extends React.Component {
@@ -23,8 +24,8 @@ class Home extends React.Component {
 
   getRates = (event) => {
     event.preventDefault();
-    let { base, amount } = this.state; // ES6 destructuring
-    // make the AJAX request to Foreign exchange rates API to get a list of results
+    let { base, amount } = this.state;
+
     fetch(`https://alt-exchange-rate.herokuapp.com/latest?base=${base}`)
       .then(checkStatus)
       .then(json)
@@ -50,46 +51,54 @@ class Home extends React.Component {
 
     return (
       <div className="container">
-        <div
-          className="card shadow-lg text-center text-white bg-dark mb-3"
-          style={{ maxWidth: 288 }}
-        >
-          <div className="card-header">
-            <h3>Exchange Rate</h3>
+        <div className="row">
+          <div className="col-sm-6">
+            <CurrencyConverter />
           </div>
-          <div className="card-body">
-            <form onSubmit={this.getRates}>
-              <div className="input-group mb-3">
-                <span className="input-group-text bg-info">Currency</span>
-                <select
-                  id="base"
-                  value={base}
-                  onChange={this.baseChange}
-                  className="form-select"
-                >
-                  {Object.keys(currencies).map((eachCurrency) => (
-                    <option key={eachCurrency} value={eachCurrency}>
-                      {eachCurrency} ({currencies[eachCurrency].symbol})
-                    </option>
-                  ))}
-                </select>
+          <div className="col-sm-6">
+            <div className="card shadow-lg text-white bg-dark mb-3">
+              <div className="card-header text-center">
+                <h3>Exchange Rate</h3>
               </div>
-              <div className="input-group mb-3">
-                <span className="input-group-text bg-info" id="basic-addon1">
-                  Amount
-                </span>
-                <input
-                  type="text"
-                  className="form-control"
-                  placeholder="1"
-                  value={amount}
-                  onChange={this.amountChange}
-                />
+
+              <div className="card-body">
+                <form onSubmit={this.getRates}>
+                  <label className="form-label">{currencies[base].name}</label>
+                  <div className="input-group mb-3">
+                    <select
+                      id="base"
+                      value={base}
+                      onChange={this.baseChange}
+                      className="form-select"
+                    >
+                      {Object.keys(currencies).map((eachCurrency) => (
+                        <option key={eachCurrency} value={eachCurrency}>
+                          {eachCurrency}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                  <div className="input-group mb-3">
+                    <span
+                      className="input-group-text bg-info"
+                      id="basic-addon1"
+                    >
+                      {currencies[base].symbol}
+                    </span>
+                    <input
+                      type="text"
+                      className="form-control"
+                      placeholder="1"
+                      value={amount}
+                      onChange={this.amountChange}
+                    />
+                  </div>
+                  <button type="submit" className="btn btn-sm btn-outline-info">
+                    Show Rates
+                  </button>
+                </form>
               </div>
-              <button type="submit" className="btn btn-outline-info">
-                Show Rates
-              </button>
-            </form>
+            </div>
           </div>
         </div>
 
@@ -104,7 +113,6 @@ class Home extends React.Component {
               </tr>
             </thead>
             <tbody>
-              {console.log(rates)}
               {rates.map((rate) => {
                 return (
                   <ShowRates key={rate.currency} rate={rate} symbol={rate} />
