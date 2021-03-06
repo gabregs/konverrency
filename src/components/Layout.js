@@ -21,7 +21,7 @@ const Layout = (props) => {
           <p>
             Created by {` `}
             <a href="https://github.com/paoregz">
-              <i class="fab fa-github text-dark"></i>
+              <i className="fab fa-github text-dark"></i>
             </a>
             {` `} paoregs
           </p>

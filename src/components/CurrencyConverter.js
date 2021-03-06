@@ -87,7 +87,7 @@ class CurrencyConverter extends React.Component {
   };
 
   render() {
-    const { currencyA, amountA, amountB, rate, currencyB } = this.state;
+    const { currencyA, amountA, amountB, currencyB } = this.state;
 
     const currencyChoices = Object.keys(currencies).map((eachCurrency) => (
       <option key={eachCurrency} value={eachCurrency}>
