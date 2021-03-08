@@ -26,7 +26,7 @@ class Home extends React.Component {
     event.preventDefault();
     let { base, amount } = this.state;
 
-    fetch(`https://alt-exchange-rate.herokuapp.com/latest?base=${base}`)
+    fetch(`https://api.exchangeratesapi.io/latest?base=${base}`)
       .then(checkStatus)
       .then(json)
       .then((data) => {
@@ -93,7 +93,7 @@ class Home extends React.Component {
                       onChange={this.amountChange}
                     />
                   </div>
-                  <button type="submit" className="btn btn-sm btn-outline-info">
+                  <button type="submit" className="btn btn-outline-info">
                     Show Rates
                   </button>
                 </form>
@@ -103,7 +103,8 @@ class Home extends React.Component {
         </div>
 
         <div className="card shadow-lg text-center text-white bg-dark">
-          <table className="table table-dark table-striped table-bordered my-3">
+          <h3 className="mt-3">Exchange Rate Data</h3>
+          <table className="table table-dark table-striped table-bordered mb-3">
             <thead>
               <tr>
                 <th scope="col">Symbol</th>
